@@ -18,76 +18,111 @@ class CarManager
 
     public void AddCar()
     {
-        Console.Write("Enter car type (Fuel/Electric): ");
-        if (!Enum.TryParse(Console.ReadLine()?.Trim(), true, out CarType type))
+        try
         {
-            Console.WriteLine("Invalid type.");
-            return;
+            Console.Write("Enter car type (Fuel/Electric): ");
+            if (!Enum.TryParse(Console.ReadLine()?.Trim(), true, out CarType type))
+            {
+                Console.WriteLine("Invalid type.");
+                return;
+            }
+
+            Console.Write("Enter Make: ");
+            string make = Console.ReadLine()?.Trim() ?? "";
+
+            Console.Write("Enter Model: ");
+            string model = Console.ReadLine()?.Trim() ?? "";
+
+            Console.Write("Enter Year: ");
+            if (!int.TryParse(Console.ReadLine()?.Trim(), out int year))
+            {
+                Console.WriteLine("Invalid year.");
+                return;
+            }
+
+            cars.Add(new Car { Make = make, Model = model, Year = year, Type = type });
+            Console.WriteLine("Car added success!");
         }
-
-        Console.Write("Enter Make: ");
-        string make = Console.ReadLine()?.Trim() ?? "";
-
-        Console.Write("Enter Model: ");
-        string model = Console.ReadLine()?.Trim() ?? "";
-
-        Console.Write("Enter Year: ");
-        if (!int.TryParse(Console.ReadLine()?.Trim(), out int year))
+        catch (Exception ex)
         {
-            Console.WriteLine("Invalid year.");
-            return;
+            Console.WriteLine($" Error: {ex.Message}");
         }
-
-        cars.Add(new Car { Make = make, Model = model, Year = year, Type = type });
-        Console.WriteLine("Car added success!");
     }
 
     public void ShowAllCars()
     {
-        if (cars.Count == 0)
+        try 
         {
-            Console.WriteLine("Car not found.");
-            return;
+            if (cars.Count == 0)
+            {
+                Console.WriteLine("Car not found.");
+                return;
+            }
+            foreach (var car in cars)
+            {
+                Console.WriteLine($"{car.Make} {car.Model}, {car.Year}, {car.Type}");
+            }
         }
-        foreach (var car in cars)
+        catch (Exception ex)
         {
-            Console.WriteLine($"{car.Make} {car.Model}, {car.Year}, {car.Type}");
+            Console.WriteLine($"Error: {ex.Message}");
         }
     }
 
     public void FindCarByMake()
     {
-        Console.Write("Enter Make to search: ");
-        string make = Console.ReadLine()?.Trim() ?? "";
-        var results = cars.Where(car => car.Make.ToLower() == make.ToLower()).ToList();
-        InfoCars(results);
+        try
+        {
+            Console.Write("Enter Make to search: ");
+            string make = Console.ReadLine()?.Trim() ?? "";
+            var results = cars.Where(car => car.Make.ToLower() == make.ToLower()).ToList();
+            InfoCars(results);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
     }
 
     public void FilterCarsByType()
     {
-        Console.Write("Enter Type (Fuel/Electric): ");
-        if (!Enum.TryParse(Console.ReadLine(), true, out CarType type))
+        try
         {
-            Console.WriteLine("Invalid type.");
-            return;
+            Console.Write("Enter Type (Fuel/Electric): ");
+            if (!Enum.TryParse(Console.ReadLine(), true, out CarType type))
+            {
+                Console.WriteLine("Invalid type.");
+                return;
+            }
+            var results = cars.Where(car => car.Type == type).ToList();
+            InfoCars(results);
         }
-        var results = cars.Where(car => car.Type == type).ToList();
-        InfoCars(results);
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
     }
 
     public void DeleteCarByModel()
     {
-        Console.Write("Enter Model to remove: ");
-        string model = Console.ReadLine()?.Trim() ?? "";
-        var carToRemove = cars.FirstOrDefault(car => car.Model.ToLower() == model.ToLower());
-        if (carToRemove != null)
+        try
         {
-            cars.Remove(carToRemove);
-            Console.WriteLine("Car removed success.");
+            Console.Write("Enter Model to remove: ");
+            string model = Console.ReadLine()?.Trim() ?? "";
+            var carToRemove = cars.FirstOrDefault(car => car.Model.ToLower() == model.ToLower());
+            if (carToRemove != null)
+            {
+                cars.Remove(carToRemove);
+                Console.WriteLine("Car removed success.");
+            }
+            else
+            {
+                Console.WriteLine("Car not found.");
+            }
         }
-        else
+        catch (Exception ex)
         {
-            Console.WriteLine("Car not found.");
+            Console.WriteLine($"Error: {ex.Message}");
         }
     }
 
