@@ -1,12 +1,21 @@
-﻿namespace AssignmentDay1.Tests;
+﻿using AssignmentDay1;
 
-[TestClass]
-public sealed class Test1
+namespace AssignmentDay1.Tests
 {
-    [TestMethod]
-    public void TestMethod1()
+    [TestClass]
+    public sealed class Test1
     {
-        // Arrange
-        
+        [TestMethod]
+        public void GetCarType_ShouldReturnCar_WhenWheelsAreFour()
+        {
+            // Arrange
+            var carType = new CarType();
+            
+            // Act
+            var result = carType.GetCarType(4);
+            
+            // Assert
+            Assert.AreEqual("Car", result);
+        }
     }
 }

@@ -15,5 +15,8 @@
   <ItemGroup>
     <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AssignmentDay1\AssignmentDay1.csproj" />
+  </ItemGroup>
 
 </Project>

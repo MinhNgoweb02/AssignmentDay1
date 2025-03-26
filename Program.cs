@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using AssignmentDay1;
 
+
 class Car
 {
-    public string Make { get; set; } = "";
-    public string Model { get; set; } = "";
+    public string Make { get; set; } = string.Empty;
+    public string Model { get; set; } = string.Empty;
     public int Year { get; set; }
     public CarType Type { get; set; }
 }
@@ -18,7 +19,7 @@ class CarManager
     public void AddCar()
     {
         Console.Write("Enter car type (Fuel/Electric): ");
-        if (!Enum.TryParse(Console.ReadLine(), true, out CarType type))
+        if (!Enum.TryParse(Console.ReadLine()?.Trim(), true, out CarType type))
         {
             Console.WriteLine("Invalid type.");
             return;
@@ -31,7 +32,7 @@ class CarManager
         string model = Console.ReadLine()?.Trim() ?? "";
 
         Console.Write("Enter Year: ");
-        if (!int.TryParse(Console.ReadLine(), out int year))
+        if (!int.TryParse(Console.ReadLine()?.Trim(), out int year))
         {
             Console.WriteLine("Invalid year.");
             return;
