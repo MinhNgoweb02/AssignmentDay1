@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AssignmentDay1;
-
+﻿using AssignmentDay1;
 
 class Car
 {
@@ -41,27 +37,19 @@ class CarManager
             }
 
             cars.Add(new Car { Make = make, Model = model, Year = year, Type = type });
-            Console.WriteLine("Car added success!");
+            Console.WriteLine("Car added successfully!");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($" Error: {ex.Message}");
+            Console.WriteLine($"Error: {ex.Message}");
         }
     }
 
     public void ShowAllCars()
     {
-        try 
+        try
         {
-            if (cars.Count == 0)
-            {
-                Console.WriteLine("Car not found.");
-                return;
-            }
-            foreach (var car in cars)
-            {
-                Console.WriteLine($"{car.Make} {car.Model}, {car.Year}, {car.Type}");
-            }
+            InfoCars(cars); 
         }
         catch (Exception ex)
         {
@@ -75,7 +63,7 @@ class CarManager
         {
             Console.Write("Enter Make to search: ");
             string make = Console.ReadLine()?.Trim() ?? "";
-            var results = cars.Where(car => car.Make.ToLower() == make.ToLower()).ToList();
+            var results = cars.Where(car => car.Make.Equals(make, StringComparison.OrdinalIgnoreCase)).ToList();
             InfoCars(results);
         }
         catch (Exception ex)
@@ -109,11 +97,11 @@ class CarManager
         {
             Console.Write("Enter Model to remove: ");
             string model = Console.ReadLine()?.Trim() ?? "";
-            var carToRemove = cars.FirstOrDefault(car => car.Model.ToLower() == model.ToLower());
+            var carToRemove = cars.FirstOrDefault(car => car.Model.Equals(model, StringComparison.OrdinalIgnoreCase));
             if (carToRemove != null)
             {
                 cars.Remove(carToRemove);
-                Console.WriteLine("Car removed success.");
+                Console.WriteLine("Car removed successfully.");
             }
             else
             {
@@ -179,7 +167,7 @@ class Program
                 case 6:
                     return;
                 default:
-                    Console.WriteLine("Invalid choice. Again: ");
+                    Console.WriteLine("Invalid choice. Try again: ");
                     break;
             }
         }
